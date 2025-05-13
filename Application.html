@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>EmpowHer | Resume Scorer</title>
+  <title>EmpowHer | Application Scorer</title>
   <meta name="viewport" content="width=device-width" />
   <link rel="stylesheet" href="styles.css" />
   <style>
@@ -38,23 +38,25 @@
       margin-bottom: 25px;
     }
 
-    .score-box input[type="file"] {
+    .score-box select,
+    .score-box input[type="file"],
+    .score-box button {
       width: 90%;
       padding: 10px;
       margin-bottom: 15px;
-      border: 1px solid #ddd;
       border-radius: 8px;
       font-size: 1rem;
     }
 
+    .score-box select,
+    .score-box input[type="file"] {
+      border: 1px solid #ccc;
+    }
+
     .score-box button {
-      width: 95%;
-      padding: 12px;
       background-color: #5f27cd;
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 1rem;
       cursor: pointer;
       font-weight: bold;
     }
@@ -71,102 +73,43 @@
       border-radius: 10px;
       padding: 1rem;
       font-size: 0.95rem;
-      max-height: 250px;
+      max-height: 300px;
       overflow-y: auto;
+    }
+
+    .home-button {
+      background-color: #999;
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      width: 90%;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
   <div class="score-box">
-    <h1>Resume Scorer</h1>
-    <h3>Upload your resume (.txt only) to get instant feedback.</h3>
+    <h1>Application Scorer</h1>
+    <h3>Upload your resume (.txt) and get instant, role-specific feedback.</h3>
+
+    <label for="roleSelect"><strong>Select your desired role:</strong></label><br />
+    <select id="roleSelect">
+      <option value="Software Engineer">Software Engineer</option>
+      <option value="UX Designer">UX Designer</option>
+      <option value="Product Manager">Product Manager</option>
+      <option value="Data Analyst">Data Analyst</option>
+    </select>
 
     <input type="file" id="resumeFile" accept=".txt" />
     <button onclick="scoreResume()">Score Resume</button>
+    <a href="home.html" class="home-button">⬅ Back to Home</a>
     <div id="results"></div>
   </div>
 
-  <script>
-    function scoreResume() {
-      const file = document.getElementById('resumeFile').files[0];
-      const results = document.getElementById('results');
-      results.innerText = "Scoring...";
-
-      if (!file || !file.name.endsWith('.txt')) {
-        results.innerText = "❌ Please upload a .txt resume file.";
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        const text = reader.result;
-        const scoreData = evaluateResume(text);
-        results.innerText = `⭐ Resume Score: ${scoreData.score}/100\n\n📝 Feedback:\n${scoreData.feedback.join('\n')}`;
-      };
-      reader.readAsText(file);
-    }
-
-    function evaluateResume(text) {
-      let score = 0;
-      const feedback = [];
-      const lowerText = text.toLowerCase();
-
-      // ✅ Contact Info
-      if (lowerText.match(/\bemail\b|@|\bphone\b/)) {
-        score += 15;
-      } else {
-        feedback.push("❌ Missing contact info (email or phone).");
-      }
-
-      // ✅ Summary / Objective
-      if (lowerText.includes("summary") || lowerText.includes("objective")) {
-        score += 10;
-      } else {
-        feedback.push("❌ Add a summary or objective at the top.");
-      }
-
-      // ✅ Action Verbs
-      const actionVerbs = ["led", "created", "developed", "managed", "designed"];
-      const foundVerbs = actionVerbs.filter(v => lowerText.includes(v));
-      score += Math.min(foundVerbs.length * 3, 15);
-      if (foundVerbs.length === 0) {
-        feedback.push("❌ Add action verbs like 'Led', 'Created', etc.");
-      }
-
-      // ✅ Measurable Results
-      if (lowerText.match(/\b\d+%|\$|increased|reduced\b/)) {
-        score += 15;
-      } else {
-        feedback.push("❌ Add measurable achievements (e.g., 'Increased revenue by 20%').");
-      }
-
-      // ✅ Keywords
-      const keywords = ["teamwork", "leadership", "python", "communication", "problem-solving"];
-      const foundKeywords = keywords.filter(k => lowerText.includes(k));
-      score += Math.min(foundKeywords.length * 3, 15);
-      if (foundKeywords.length < 2) {
-        feedback.push("❌ Add industry-relevant keywords like 'Python', 'teamwork', etc.");
-      }
-
-      // ✅ Resume Length
-      const wordCount = text.split(/\s+/).length;
-      if (wordCount >= 150 && wordCount <= 700) {
-        score += 20;
-      } else {
-        feedback.push("❌ Resume is too short or too long. Keep it ~300–500 words.");
-      }
-
-      // ✅ Formatting (basic)
-      if (text.includes("\n\n")) {
-        score += 10;
-      } else {
-        feedback.push("❌ Add spacing between sections for clarity.");
-      }
-
-      return { score, feedback };
-    }
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>

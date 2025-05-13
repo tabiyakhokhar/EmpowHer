@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EmpowHER | Events</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+    }
+
+    header {
+      background-color: #3e3e63;
+      color: white;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #f9ca24;
+    }
+
+    main {
+      padding: 3rem 2rem;
+      text-align: center;
+      color: #2c2c54;
+    }
+
+    .section {
+      background: white;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 15px;
+      max-width: 800px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .section h2 {
+      color: #5f27cd;
+      margin-bottom: 1rem;
+    }
+
+    .event {
+      text-align: left;
+      margin-top: 1.5rem;
+    }
+
+    .event h3 {
+      color: #3e3e63;
+      margin-bottom: 0.3rem;
+    }
+
+    .event p {
+      margin: 0.3rem 0;
+      color: #444;
+    }
+
+    .form-container {
+      margin-top: 2rem;
+      text-align: left;
+    }
+
+    .form-container label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+      font-weight: bold;
+      color: #5f27cd;
+    }
+
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .form-container textarea {
+      resize: vertical;
+    }
+
+    .add-event-button {
+      background-color: #5f27cd;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .add-event-button:hover {
+      background-color: #4e18b5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #1a1a2e;
+      color: white;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>EmpowHER</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="Application.html">Resume Scorer</a>
+      <a href="AIChatBot.html">HERa</a>
+      <a href="resources.html">Resources</a>
+      <a href="Events.html">Events</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="section">
+      <h2>Upcoming In-Person Events 📍</h2>
+
+      <div class="event">
+        <h3>Women in Tech Mixer</h3>
+        <p><strong>Date:</strong> June 5, 2025</p>
+        <p><strong>Location:</strong> SF Women’s Innovation Hub</p>
+        <p><strong>Description:</strong> A networking event to connect with women leaders in tech. Open to all experience levels.</p>
+      </div>
+
+      <div class="event">
+        <h3>Resume & Interview Prep Workshop</h3>
+        <p><strong>Date:</strong> June 12, 2025</p>
+        <p><strong>Location:</strong> Oakland Career Center</p>
+        <p><strong>Description:</strong> Get your resume reviewed and participate in mock interviews with industry mentors.</p>
+      </div>
+
+      <div class="event">
+        <h3>Confidence Through Coding Bootcamp</h3>
+        <p><strong>Date:</strong> June 20-22, 2025</p>
+        <p><strong>Location:</strong> Berkeley Tech Space</p>
+        <p><strong>Description:</strong> A 3-day immersive coding bootcamp tailored for women switching into tech careers.</p>
+      </div>
+
+      <!-- Add Event Form -->
+      <div class="form-container">
+        <h3 style="color: #3e3e63;">Add a New Event</h3>
+
+        <label for="title">Event Title</label>
+        <input type="text" id="title" name="title" placeholder="Enter event title" />
+
+        <label for="date">Date</label>
+        <input type="text" id="date" name="date" placeholder="e.g., July 10, 2025" />
+
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" placeholder="e.g., Los Angeles Tech Hub" />
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4" placeholder="Write a short event description..."></textarea>
+
+        <button class="add-event-button">+ Add Event</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 EmpowHER at FidHacks | Built with 💜 by Team EmpowHER
+  </footer>
+
+</body>
+</html>
