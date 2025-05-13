@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EmpowHer | Resume Scorer</title>
+  <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .score-box {
+      background: white;
+      padding: 2.5rem 2rem;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .score-box h1 {
+      margin-bottom: 10px;
+      color: #5f27cd;
+    }
+
+    .score-box h3 {
+      font-weight: normal;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .score-box input[type="file"] {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .score-box button {
+      width: 95%;
+      padding: 12px;
+      background-color: #5f27cd;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .score-box button:hover {
+      background-color: #341f97;
+    }
+
+    #results {
+      text-align: left;
+      margin-top: 1.5rem;
+      white-space: pre-wrap;
+      background-color: #f4f4f4;
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 0.95rem;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="score-box">
+    <h1>Resume Scorer</h1>
+    <h3>Upload your resume (.txt only) to get instant feedback.</h3>
+
+    <input type="file" id="resumeFile" accept=".txt" />
+    <button onclick="scoreResume()">Score Resume</button>
+    <div id="results"></div>
+  </div>
+
+  <script>
+    function scoreResume() {
+      const file = document.getElementById('resumeFile').files[0];
+      const results = document.getElementById('results');
+      results.innerText = "Scoring...";
+
+      if (!file || !file.name.endsWith('.txt')) {
+        results.innerText = "❌ Please upload a .txt resume file.";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const text = reader.result;
+        const scoreData = evaluateResume(text);
+        results.innerText = `⭐ Resume Score: ${scoreData.score}/100\n\n📝 Feedback:\n${scoreData.feedback.join('\n')}`;
+      };
+      reader.readAsText(file);
+    }
+
+    function evaluateResume(text) {
+      let score = 0;
+      const feedback = [];
+      const lowerText = text.toLowerCase();
+
+      // ✅ Contact Info
+      if (lowerText.match(/\bemail\b|@|\bphone\b/)) {
+        score += 15;
+      } else {
+        feedback.push("❌ Missing contact info (email or phone).");
+      }
+
+      // ✅ Summary / Objective
+      if (lowerText.includes("summary") || lowerText.includes("objective")) {
+        score += 10;
+      } else {
+        feedback.push("❌ Add a summary or objective at the top.");
+      }
+
+      // ✅ Action Verbs
+      const actionVerbs = ["led", "created", "developed", "managed", "designed"];
+      const foundVerbs = actionVerbs.filter(v => lowerText.includes(v));
+      score += Math.min(foundVerbs.length * 3, 15);
+      if (foundVerbs.length === 0) {
+        feedback.push("❌ Add action verbs like 'Led', 'Created', etc.");
+      }
+
+      // ✅ Measurable Results
+      if (lowerText.match(/\b\d+%|\$|increased|reduced\b/)) {
+        score += 15;
+      } else {
+        feedback.push("❌ Add measurable achievements (e.g., 'Increased revenue by 20%').");
+      }
+
+      // ✅ Keywords
+      const keywords = ["teamwork", "leadership", "python", "communication", "problem-solving"];
+      const foundKeywords = keywords.filter(k => lowerText.includes(k));
+      score += Math.min(foundKeywords.length * 3, 15);
+      if (foundKeywords.length < 2) {
+        feedback.push("❌ Add industry-relevant keywords like 'Python', 'teamwork', etc.");
+      }
+
+      // ✅ Resume Length
+      const wordCount = text.split(/\s+/).length;
+      if (wordCount >= 150 && wordCount <= 700) {
+        score += 20;
+      } else {
+        feedback.push("❌ Resume is too short or too long. Keep it ~300–500 words.");
+      }
+
+      // ✅ Formatting (basic)
+      if (text.includes("\n\n")) {
+        score += 10;
+      } else {
+        feedback.push("❌ Add spacing between sections for clarity.");
+      }
+
+      return { score, feedback };
+    }
+  </script>
+
+</body>
+</html>

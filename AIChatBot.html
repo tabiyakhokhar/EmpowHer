@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EmpowHER | HERa</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+    }
+
+    header {
+      background-color: #1a1a2e;
+      color: white;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .chat-section {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    #messages {
+      height: 250px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+
+    #messages p {
+      margin: 0.5rem 0;
+    }
+
+    #userInput {
+      width: 70%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .chat-controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #5f27cd;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #341f97;
+    }
+
+    .resources {
+      max-width: 800px;
+      margin: 3rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .resources h2 {
+      color: #5f27cd;
+      margin-bottom: 1rem;
+    }
+
+    .resources ul {
+      padding-left: 1.2rem;
+    }
+
+    .resources li {
+      margin: 10px 0;
+    }
+
+    .resources a {
+      color: #1a1a2e;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .resources a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>EmpowHER HERa</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="application.html">Resume Scorer</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </header>
+
+  <div class="chat-section">
+    <h2>Talk to Your Career Coach 🤖</h2>
+    <div id="messages">
+      <p><strong>Bot:</strong> Hi there! Want to start a mock interview or ask a question about jobs?</p>
+    </div>
+    <div class="chat-controls">
+      <input type="text" id="userInput" placeholder="Type your message here..." onkeydown="if(event.key==='Enter') sendMessage()">
+      <button onclick="sendMessage()">Send</button>
+      <button onclick="startMockInterview()">Mock Interview</button>
+    </div>
+  </div>
+
+  <!--
+  <div class="resources">
+    <h2>Helpful Resources 💡</h2>
+    <ul>
+      <li><a href="https://www.theforage.com" target="_blank">The Forage – Virtual Job Simulations</a></li>
+      <li><a href="https://www.interviewing.io/" target="_blank">Interviewing.io – Practice Interviews</a></li>
+      <li><a href="https://www.linkedin.com/learning/" target="_blank">LinkedIn Learning – Job Skills</a></li>
+      <li><a href="https://resumegenius.com/" target="_blank">Resume Genius – Free Resume Templates</a></li>
+      <li><a href="https://careerfoundry.com/en/blog/" target="_blank">CareerFoundry – Interview Tips & Guides</a></li>
+    </ul>
+  </div>
+-->
+
+  <script>
+    const messages = document.getElementById("messages");
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const userText = input.value.trim();
+      if (userText === "") return;
+
+      addMessage("You", userText);
+      input.value = "";
+
+      // Mock responses
+      let botReply = "Let me think... 🤔";
+      if (userText.toLowerCase().includes("resume")) {
+        botReply = "You can upload your resume on the Application page for matching!";
+      } else if (userText.toLowerCase().includes("not qualified")) {
+        botReply = "You don’t need to check every box. Confidence is key — you're more than ready!";
+      }
+
+      setTimeout(() => addMessage("Bot", botReply), 600);
+    }
+
+    function addMessage(sender, text) {
+      messages.innerHTML += `<p><strong>${sender}:</strong> ${text}</p>`;
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function startMockInterview() {
+      const questions = [
+        "Tell me about yourself.",
+        "What are your strengths and weaknesses?",
+        "Describe a time you overcame a challenge.",
+        "Why do you want this job?",
+        "Where do you see yourself in 5 years?"
+      ];
+      addMessage("Bot", "Starting mock interview. Here's your first question:");
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < questions.length) {
+          addMessage("Bot", questions[i++]);
+        } else {
+          clearInterval(interval);
+          addMessage("Bot", "Great job! Reflect on your answers and keep practicing.");
+        }
+      }, 2000);
+    }
+  </script>
+
+</body>
+</html>
