@@ -1,63 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>EmpowHER | Sign In</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>EmpowHER | Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
-
     .login-box {
-      background: white;
-      padding: 2.5rem 2rem;
+      background-color: white;
+      padding: 3rem 2rem;
       border-radius: 15px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-      width: 100%;
-      max-width: 400px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
       text-align: center;
+      width: 90%;
+      max-width: 400px;
     }
-
     .login-box h1 {
-      margin-bottom: 10px;
       color: #5f27cd;
+      margin-bottom: 1rem;
     }
-
-    .login-box h3 {
-      font-weight: normal;
-      color: #555;
-      margin-bottom: 25px;
-    }
-
     .login-box input {
       width: 90%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      padding: 0.8rem;
+      margin: 1rem 0;
       font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
-
     .login-box button {
-      width: 95%;
-      padding: 12px;
+      padding: 0.8rem 2rem;
       background-color: #5f27cd;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 1rem;
-      cursor: pointer;
       font-weight: bold;
+      cursor: pointer;
     }
-
     .login-box button:hover {
       background-color: #341f97;
     }
@@ -66,28 +54,26 @@
 <body>
 
   <div class="login-box">
-    <h1>EmpowHer</h1>
-    <h3>Powered by FidHacks 🚀<br>Be bold. Apply anyways.</h3>
-
-    <form onsubmit="return handleLogin(event)">
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Sign In</button>
-    </form>
+    <h1>Welcome to EmpowHER 💜</h1>
+    <p>Please enter your name to continue:</p>
+    <input type="text" id="nameInput" placeholder="Your name..." />
+    <button onclick="login()">Enter</button>
   </div>
 
   <script>
-    function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      if (email && password) {
-        // redirect to home.html
-        window.location.href = "home.html";
-      } else {
-        alert("Please enter your email and password.");
+    function login() {
+      const name = document.getElementById('nameInput').value.trim();
+      if (!name) {
+        alert('Please enter your name!');
+        return;
       }
+      localStorage.setItem('empowher_user', name);
+      window.location.href = 'home.html';
+    }
+
+    // Auto-redirect if already logged in
+    if (localStorage.getItem('empowher_user')) {
+      window.location.href = 'home.html';
     }
   </script>
 
