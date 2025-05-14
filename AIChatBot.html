@@ -179,7 +179,6 @@
   </style>
 </head>
 <body>
-
   <header>
     <h1>EmpowHER</h1>
     <nav>
@@ -220,8 +219,121 @@
     EmpowHER at FidHacks 2025 | Built with 💜 by Tabiya, Anett, Ayug, Nina
   </footer>
 
-  <!-- Chat logic is unchanged -->
-  <script>/* existing script remains unchanged */</script>
+  <script>
+    const chatContainer = document.getElementById("chatContainer");
+    const confidenceFill = document.getElementById("confidenceFill");
+    const confidenceText = document.getElementById("confidenceText");
+    let mockInterviewMode = false;
+    let mockInterviewStep = 0;
+    let confidenceLevel = 0;
+    let hacksVisible = false;
 
+    const interviewQuestions = [
+      "Let's begin! 👩‍💼 Tell me about yourself.",
+      "Awesome! What are your strengths?",
+      "Great! Describe a challenge you overcame.",
+      "✅ That wraps up the mock interview! Let me know if you want feedback."
+    ];
+
+    const hacksList = [
+      "💡 Instead of: 'Responsible for team communication' → Try: 'Led weekly stand-ups to align a 5-person team'",
+      "💡 Use: 'Reduced processing time by 30% through streamlined backend logic'",
+      "💡 Say: 'Collaborated cross-functionally with design and QA to launch 3 new features'"
+    ];
+
+    function updateConfidence() {
+      confidenceLevel = Math.min(confidenceLevel + 25, 100);
+      confidenceFill.style.width = confidenceLevel + "%";
+      const filled = Math.round(confidenceLevel / 25);
+      const hearts = "💜".repeat(filled) + "🤍".repeat(5 - filled);
+      confidenceText.textContent = `Confidence Level: ${hearts}`;
+      if (confidenceLevel === 100) {
+        addBubble("👏 Look at you go! Confidence Level maxed out! 💪", "bot");
+      }
+    }
+
+    function addBubble(text, sender = "bot") {
+      const bubble = document.createElement("div");
+      bubble.className = `bubble ${sender}`;
+      bubble.innerText = text;
+      chatContainer.appendChild(bubble);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function toggleHacks() {
+      if (!hacksVisible) {
+        hacksList.forEach(hack => addBubble(hack));
+        document.getElementById("hacksToggle").innerText = "Hide HER Hacks ❌";
+      } else {
+        const allBubbles = document.querySelectorAll(".bubble.bot");
+        allBubbles.forEach(b => {
+          if (b.innerText.startsWith("💡")) b.remove();
+        });
+        document.getElementById("hacksToggle").innerText = "Show HER Hacks 🔄";
+      }
+      hacksVisible = !hacksVisible;
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      addBubble(userText, "user");
+      input.value = "";
+
+      if (mockInterviewMode) {
+        updateConfidence();
+        mockInterviewStep++;
+        if (mockInterviewStep < interviewQuestions.length) {
+          setTimeout(() => {
+            addBubble(interviewQuestions[mockInterviewStep]);
+          }, 800);
+        } else {
+          mockInterviewMode = false;
+          mockInterviewStep = 0;
+        }
+        return;
+      }
+
+      const typingBubble = document.createElement("div");
+      typingBubble.className = "bubble bot";
+      typingBubble.innerText = "Typing...";
+      chatContainer.appendChild(typingBubble);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      try {
+        const response = await fetch("http://localhost:3000/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userText })
+        });
+
+        const data = await response.json();
+        typingBubble.remove();
+        addBubble(data.reply || "No response received.");
+        if (
+          userText.length > 20 ||
+          userText.toLowerCase().includes("interview") ||
+          userText.toLowerCase().includes("resume")
+        ) {
+          updateConfidence();
+        }
+      } catch (err) {
+        typingBubble.remove();
+        addBubble("⚠️ Error talking to bot.");
+        console.error(err);
+      }
+    }
+
+    function startMockInterview() {
+      mockInterviewMode = true;
+      mockInterviewStep = 0;
+      confidenceLevel = 0;
+      confidenceFill.style.width = "0%";
+      confidenceText.textContent = "Confidence Level: 💜🤍🤍🤍🤍";
+      addBubble(interviewQuestions[mockInterviewStep]);
+    }
+  </script>
 </body>
 </html>
