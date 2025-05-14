@@ -112,24 +112,40 @@
       color: white;
       margin-top: 2rem;
     }
+
+    .dropbtn {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .back-button a {
+      text-decoration: none;
+      padding: 10px 20px;
+      background-color: #5f27cd;
+      color: white;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
   </style>
 </head>
 <body>
 
   <header>
-    <h1>EmpowHER</h1>
+    <img src="4-removebg-preview (1).png" alt="EmpowHER Logo" style="width: 250px; height: auto;" />
     <nav>
       <div class="dropdown">
         <button class="dropbtn">Menu ▾</button>
         <div class="dropdown-content">
           <a href="home.html">Home</a>
-          <a href="Application.html">Resume Scorer</a>
           <a href="AIChatBot.html">HERa</a>
-          <a href="resources.html">Resources</a>
-          <a href="Events.html">Events</a>
+          <a href="Application.html">Resume Scorer</a>
           <a href="Calendar.html">7 Day</a>
+          <a href="Events.html">Events</a>
+          <a href="resources.html">Resources</a>
           <a href="AboutUS.html">About Us</a>
-          <a href="#" onclick="localStorage.clear(); location.href='index.html'">Logout</a>
+          <a href="#" onclick="localStorage.clear(); location.href='index.html'">Log Out</a>
         </div>
       </div>
     </nav>
@@ -147,8 +163,16 @@
       <div class="prep-item"><input type="checkbox" id="day7"><label for="day7">Day 7: Submit Application!</label></div>
       <div class="prep-item"><input type="checkbox" id="day8"><label for="day8">Optional: Ask <a href="AIChatBot.html" style="text-decoration: none;"><b>HERa</b></a> for a Mock Interview! </label></div>
     </div>
-  </main>
 
+    <br>
+    <br>
+
+    <div class="back-button">
+      <a href="https://calendar.google.com/calendar/u/0/r/eventedit?text=7+Day+Application+Prep&details=More+help+see:+https://support.google.com/calendar/thread/81344786&dates=20250514T090000/20250514T100000&recur=RRULE:FREQ%3DDAILY;UNTIL%3D20250521&ctz=America/Toronto">Add to Google Calendar</a>
+    </div>
+
+  </main>
+  
   <footer>
     EmpowHER at FidHacks 2025 | Built with 💜 by Tabiya, Anett, Ayug, Nina
   </footer>
